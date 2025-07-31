@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Location</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; }
+  </style>
+</head>
+<body>
+  <h1>Your Location</h1>
+  <p id="location">Loading...</p>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      fetch('https://ipapi.co/json/')
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+          var loc = document.getElementById('location');
+          if (data && data.city && data.country_name) {
+            loc.textContent = 'You are in ' + data.city + ', ' + data.country_name + '.';
+          } else {
+            loc.textContent = 'Unable to determine your location.';
+          }
+        })
+        .catch(function() {
+          document.getElementById('location').textContent = 'Unable to determine your location.';
+        });
+    });
+  </script>
+</body>
+</html>
